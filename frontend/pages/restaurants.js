@@ -11,12 +11,12 @@ import {
   Row,
 } from 'reactstrap';
 
-// import Cart from '../components/Cart/Cart';
+import Cart from '../components/Cart/Cart';
 import { compose } from 'recompose';
-// import defaultPage from '../hocs/defaultPage';
+import defaultPage from '../hocs/defaultPage';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-// import { withContext } from '../components/Context/AppProvider';
+import { withContext } from '../components/Context/AppProvider';
 import { withRouter } from 'next/router';
 
 class Restaurants extends React.Component {
@@ -41,7 +41,7 @@ class Restaurants extends React.Component {
         <>
           <h1>{restaurant.name}</h1>
           <Row>
-            <Col style={{ padding: 0, width: '100%' }}>
+            <Col xs='9' style={{ padding: 0 }}>
               <div style={{ display: 'inline-block' }} className='h-100'>
                 {restaurant.dishes.map((res) => (
                   <Card style={{ width: '30%', margin: '0 10px' }} key={res._id}>
@@ -52,7 +52,6 @@ class Restaurants extends React.Component {
                     />
                     <CardBody>
                       <CardTitle>{res.name}</CardTitle>
-                      <CardText>${res.price}.00</CardText>
                       <CardText>{res.description}</CardText>
                     </CardBody>
                     <div className='card-footer'>
@@ -86,7 +85,9 @@ class Restaurants extends React.Component {
               </div>
             </Col>
             <Col xs='3' style={{ padding: 0 }}>
-              <div>{/* <Cart isAuthenticated={isAuthenticated} /> */}</div>
+              <div>
+                <Cart isAuthenticated={isAuthenticated} />
+              </div>
             </Col>
           </Row>
         </>
@@ -118,7 +119,8 @@ const GET_RESTAURANT_DISHES = gql`
 
 export default compose(
   withRouter,
-
+  defaultPage,
+  withContext,
   graphql(GET_RESTAURANT_DISHES, {
     options: (props) => {
       return {

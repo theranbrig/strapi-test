@@ -1,7 +1,10 @@
 import App, { Container } from 'next/app';
 
+import AppProvider from '../components/Context/AppProvider';
 import Layout from '../components/Layout';
 import React from 'react';
+import { compose } from 'recompose';
+import defaultPage from '../hocs/defaultPage';
 import withData from '../lib/apollo';
 
 class MyApp extends App {
@@ -15,13 +18,13 @@ class MyApp extends App {
 
   render() {
     const { Component, pageProps, isAuthenticated, ctx } = this.props;
-    console.log(this.props);
     return (
       <Container>
-        <Layout isAuthenticated={isAuthenticated} {...pageProps}>
-          <Component {...pageProps} />
-        </Layout>
-
+        <AppProvider>
+          <Layout isAuthenticated={isAuthenticated} {...pageProps}>
+            <Component {...pageProps} />
+          </Layout>
+        </AppProvider>
         <style jsx global>
           {`
             a {
