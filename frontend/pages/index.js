@@ -2,6 +2,7 @@ import { Alert, Button, Col, Input, InputGroup, InputGroupAddon, Row } from 'rea
 
 import React from 'react';
 import RestaurantList from '../components/RestaurantList';
+import defaultPage from '../hocs/defaultPage';
 
 class Index extends React.Component {
   constructor(props) {
@@ -43,4 +44,4 @@ class Index extends React.Component {
   }
 }
 
-export default Index;
+export default defaultPage(Index);
