@@ -14,6 +14,58 @@ type UsersPermissionsMeRole {
   type: String
 }
 
+type Dish {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name: String
+  description: String
+  price: Int
+  image: UploadFile
+  restaurant: Restaurant
+}
+
+input DishInput {
+  name: String
+  description: String
+  price: Int
+  image: ID
+  restaurant: ID
+}
+
+input editDishInput {
+  name: String
+  description: String
+  price: Int
+  image: ID
+  restaurant: ID
+}
+
+input createDishInput {
+  data: DishInput
+}
+
+type createDishPayload {
+  dish: Dish
+}
+
+input updateDishInput {
+  where: InputID
+  data: editDishInput
+}
+
+type updateDishPayload {
+  dish: Dish
+}
+
+input deleteDishInput {
+  where: InputID
+}
+
+type deleteDishPayload {
+  dish: Dish
+}
+
 type Restaurant {
   id: ID!
   created_at: DateTime!
@@ -21,18 +73,21 @@ type Restaurant {
   name: String
   description: String
   image: UploadFile
+  dishes(sort: String, limit: Int, start: Int, where: JSON): [Dish]
 }
 
 input RestaurantInput {
   name: String
   description: String
   image: ID
+  dishes: [ID]
 }
 
 input editRestaurantInput {
   name: String
   description: String
   image: ID
+  dishes: [ID]
 }
 
 input createRestaurantInput {
@@ -220,6 +275,8 @@ type deleteUserPayload {
 }
 
 type Query {
+  dish(id: ID!): Dish
+  dishes(sort: String, limit: Int, start: Int, where: JSON): [Dish]
   restaurant(id: ID!): Restaurant
   restaurants(sort: String, limit: Int, start: Int, where: JSON): [Restaurant]
   files(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
@@ -235,6 +292,9 @@ type Query {
 }
 
 type Mutation {
+  createDish(input: createDishInput): createDishPayload
+  updateDish(input: updateDishInput): updateDishPayload
+  deleteDish(input: deleteDishInput): deleteDishPayload
   createRestaurant(input: createRestaurantInput): createRestaurantPayload
   updateRestaurant(input: updateRestaurantInput): updateRestaurantPayload
   deleteRestaurant(input: deleteRestaurantInput): deleteRestaurantPayload
@@ -279,4 +339,4 @@ input InputID {
   id: ID!
 }
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | Restaurant | createRestaurantPayload | updateRestaurantPayload | deleteRestaurantPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | Dish | createDishPayload | updateDishPayload | deleteDishPayload | Restaurant | createRestaurantPayload | updateRestaurantPayload | deleteRestaurantPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload

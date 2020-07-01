@@ -16,9 +16,9 @@ const RestaurantList = ({ data: { loading, error, restaurants }, search }, req) 
     if (searchQuery.length != 0) {
       return (
         <div>
-          <div className='h-100'>
+          <div className='card-section h-100'>
             {searchQuery.map((res) => (
-              <Card style={{ width: '30%', margin: '0 10px' }} className='h-100' key={res._id}>
+              <Card style={{}} className='individual-card' key={res._id}>
                 <CardImg
                   top={true}
                   style={{ height: 250 }}
@@ -39,6 +39,17 @@ const RestaurantList = ({ data: { loading, error, restaurants }, search }, req) 
 
           <style jsx global>
             {`
+              .card-section {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+              }
+              .individual-card {
+                margin: 10px;
+                display: flex !important;
+                flex-direction: column;
+                justify-content: space-between !important;
+              }
               a {
                 color: white;
               }
